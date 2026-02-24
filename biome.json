@@ -1,0 +1,26 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "extends": ["@dvashim/biome-config/react-strict"],
+  "assist": {
+    "actions": {
+      "source": {
+        "useSortedKeys": {
+          "level": "on",
+          "options": {
+            "groupByNesting": true
+          }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["package.json"],
+      "json": {
+        "formatter": {
+          "expand": "always"
+        }
+      }
+    }
+  ]
+}
