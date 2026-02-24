@@ -25,6 +25,6 @@
   },
   "scripts": {
     "build": "tsc --build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "changeset": "changeset"
   }
 }
