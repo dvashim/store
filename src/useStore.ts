@@ -1,21 +1,25 @@
-import {
-  useCallback,
-  useDebugValue,
-  useSyncExternalStore,
-} from 'react'
+import { useDebugValue, useMemo, useSyncExternalStore } from 'react'
 import type { Store } from './Store'
 
-export const useStore = <T, U = T>(
-  store: Store<T>,
-  selector: (state: T) => U = (state) => state as unknown as U
-) => {
+type Selector<T, U> = (state: T) => U
+
+function useStore<T>(store: Store<T>): T
+function useStore<T, U>(store: Store<T>, selector: Selector<T, U>): U
+function useStore<T, U = T>(store: Store<T>, selector?: Selector<T, U>): T | U {
   const value = useSyncExternalStore(
-    store.subscribe,
-    useCallback(() => selector(store.state), [selector, store]),
-    useCallback(() => selector(store.initialState), [selector, store])
+    ...useMemo(() => {
+      const getSnapshot = () => (selector ? selector(store.get()) : store.get())
+      return [
+        (onChange: () => void) => store.subscribe(onChange),
+        getSnapshot,
+        getSnapshot,
+      ] satisfies Parameters<typeof useSyncExternalStore>
+    }, [store, selector])
   )
 
   useDebugValue(value)
 
   return value
 }
+
+export { useStore }
