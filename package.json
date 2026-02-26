@@ -1,6 +1,5 @@
 {
   "description": "Yet another state management in React",
-  "keywords": [],
   "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -36,6 +35,15 @@
   },
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "react",
+    "state-manager",
+    "useSyncExternalStore",
+    "store",
+    "minimal",
+    "lightweight",
+    "typescript"
   ],
   "publishConfig": {
     "access": "public",
