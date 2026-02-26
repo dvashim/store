@@ -1,35 +1,46 @@
-import { Emitter } from './Emitter'
+type Subscriber = () => void
+type Updater<T> = (prevValue: T) => T
+type UpdateOptions = { force?: boolean }
 
-type Updater<T> = T | ((prevValue: T) => T)
-
-export class Store<T> extends Emitter<T> {
-  readonly #initialState: T
+export class Store<T> {
+  readonly #subscribers = new Set<Subscriber>()
   #state: T
 
   constructor(initialState: T) {
-    super()
     this.#state = initialState
-    this.#initialState = initialState
   }
 
-  get state() {
+  get(): T {
     return this.#state
   }
 
-  get initialState() {
-    return this.#initialState
+  set(state: T, options?: UpdateOptions): boolean {
+    return this.#notify(state, options)
   }
 
-  setState(valueOrFn: Updater<T>, options?: { forceEmit?: boolean }) {
-    const nextState =
-      valueOrFn instanceof Function
-        ? valueOrFn(this.#state)
-        : valueOrFn
+  update(updater: Updater<T>, options?: UpdateOptions): boolean {
+    return this.#notify(updater(this.#state), options)
+  }
 
-    if (!Object.is(nextState, this.#state) || options?.forceEmit) {
-      const prevState = this.#state
-      this.#state = nextState
-      this.emit(nextState, prevState)
+  subscribe(fn: Subscriber): () => void {
+    this.#subscribers.add(fn)
+    return () => this.#subscribers.delete(fn)
+  }
+
+  /**
+   * @returns `true` if listeners were notified
+   */
+  #notify(nextState: T, options?: UpdateOptions): boolean {
+    if (!options?.force && Object.is(nextState, this.#state)) {
+      return false
     }
+
+    this.#state = nextState
+
+    for (const listener of [...this.#subscribers]) {
+      listener()
+    }
+
+    return true
   }
 }
