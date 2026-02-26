@@ -10,6 +10,10 @@ export class Store<T> {
     this.#state = initialState
   }
 
+  get state() {
+    return this.#state
+  }
+
   get(): T {
     return this.#state
   }
