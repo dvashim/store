@@ -1,5 +1,11 @@
 # @dvashim/matzav
 
+## 1.1.0
+
+### Minor Changes
+
+- [#4](https://github.com/dvashim/store/pull/4) [`f327cf8`](https://github.com/dvashim/store/commit/f327cf828c37a4b34ec86bac08c6c26e64bc0606) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Refactoring
+
 ## 1.0.1
 
 ### Patch Changes
