@@ -10,8 +10,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  release:
-    name: Release
+  build-and-publish:
+    name: Build and publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,17 +25,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: 'lts/*'
+          node-version: 22
           cache: pnpm
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Type check & lint
+        run: pnpm check
+
+      - name: Build with tsc
+        run: pnpm build
 
       - name: Create Version Pull Request
         id: changesets
         uses: changesets/action@v1
         with:
           version: pnpm changeset version
+          publish: pnpm changeset publish
           commit: "chore: version packages"
           title: "chore: version packages"
           setupGitUser: true
