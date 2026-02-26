@@ -1,5 +1,11 @@
 # @dvashim/matzav
 
+## 1.1.3
+
+### Patch Changes
+
+- [#11](https://github.com/dvashim/store/pull/11) [`e04b13f`](https://github.com/dvashim/store/commit/e04b13f04e06563c0f1e53f4602b94fc869d4c86) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - expose getter method to read current state
+
 ## 1.1.2
 
 ### Patch Changes
