@@ -1,5 +1,0 @@
----
-"@dvashim/store": minor
----
-
-Refactoring
