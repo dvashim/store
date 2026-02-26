@@ -1,6 +1,6 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
-  "extends": ["@dvashim/biome-config/react-strict"],
+  "extends": ["@dvashim/biome-config/react-balanced"],
   "assist": {
     "actions": {
       "source": {
