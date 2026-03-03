@@ -60,6 +60,8 @@
     "check:biome": "biome check",
     "check:ts": "tsc --noemit",
     "clean": "rm -rf dist *.tsbuildinfo",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "watch": "pnpm build --watch"
   }
 }

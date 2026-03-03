@@ -19,15 +19,15 @@ pnpm watch          # Build in watch mode
 pnpm clean          # Remove dist/ and tsbuildinfo
 ```
 
-Tests use **Vitest** with **jsdom** environment and **@testing-library/react**. Test files go in `test/` as `*.test.ts` / `*.test.tsx`. Use `@/*` alias to import from `src/` (e.g. `import { Store } from '@/Store'`).
+Tests use **Vitest** with **jsdom** environment and **@testing-library/react**. Test files go in `test/` as `*.test.ts` / `*.test.tsx`. Use `@/*` alias to import from `src/` (e.g. `import { Store } from '@/Store'`). Run a single test file with `pnpm test test/foo.test.ts`.
 
 ## Architecture
 
 The entire library is four files in `src/`:
 
-- **`Store.ts`** — Core `Store<T>` class using ES2022 private fields (`#state`, `#subscribers`). Exposes `get()`, `set()`, `update()`, `subscribe()`. Uses `Object.is` for equality checks in `#notify()`. Reentrant `set()`/`update()` calls during notification are queued. Subscriber errors are isolated (all subscribers run; first error re-thrown after).
+- **`Store.ts`** — Core `Store<T>` class using ES2022 private fields (`#state`, `#subscribers`). Exposes `get()`, `state` getter, `set()`, `update()`, `subscribe()`. Uses `Object.is` for equality checks in `#notify()`; pass `{ force: true }` to `set()`/`update()` to bypass. Spreads subscribers into a snapshot array before iterating to safely handle mutations during notification.
 - **`useStore.ts`** — React hook wrapping `useSyncExternalStore`. Supports an optional selector for derived state. Uses `useMemo` for memoized subscription and `useDebugValue` for DevTools.
-- **`createStore.ts`** — Factory function with TypeScript overloads to create `Store` instances.
+- **`createStore.ts`** — Factory function with TypeScript overloads to create `Store` instances (with initial state, or without for `Store<T | undefined>`).
 - **`index.ts`** — Re-exports all public API.
 
 ## Tooling
