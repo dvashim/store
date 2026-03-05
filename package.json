@@ -17,15 +17,19 @@
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.4.4",
-    "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.29.8",
-    "@dvashim/biome-config": "^1.2.1",
+    "@biomejs/biome": "^2.4.5",
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
+    "@dvashim/biome-config": "^1.3.1",
     "@dvashim/typescript-config": "^1.1.9",
+    "@testing-library/react": "^16.3.2",
+    "@types/node": "^25.3.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "jsdom": "^28.1.0",
     "rimraf": "^6.1.3",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
   },
   "exports": {
     ".": {
