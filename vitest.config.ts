@@ -9,9 +9,9 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    include: ['test/**/*.test.{ts,tsx}'],
+    include: ['tests/**/*.test.{ts,tsx}'],
     typecheck: {
-      tsconfig: './tsconfig.test.json',
+      tsconfig: 'tests/tsconfig.test.json',
     },
   },
 })
