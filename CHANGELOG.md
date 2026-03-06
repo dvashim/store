@@ -1,5 +1,16 @@
 # @dvashim/matzav
 
+## 1.2.1
+
+### Patch Changes
+
+- [#16](https://github.com/dvashim/store/pull/16) [`2832f40`](https://github.com/dvashim/store/commit/2832f4023f1f704476f714c574a6d3b52a871d43) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Improve documentation and project tooling
+
+  - **Docs:** Improve README installation section with separate npm and pnpm code blocks
+  - **Docs:** Fix CHANGELOG indentation for proper markdown rendering
+  - **Tooling:** Move CLAUDE.md to `.claude/` directory
+  - **Tooling:** Add changeset slash command for Claude Code
+
 ## 1.2.0
 
 ### Minor Changes
