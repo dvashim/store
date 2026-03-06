@@ -1,5 +1,7 @@
 # @dvashim/store
 
+[![npm version](https://img.shields.io/npm/v/@dvashim/store.svg?logo=npm&style=flat-square&color2=07c&label=@dvashim/store)](https://www.npmjs.com/package/@dvashim/store) [![npm downloads](https://img.shields.io/npm/dm/@dvashim/store?logo=npm&style=flat-square&color=07c)](https://www.npmjs.com/package/@dvashim/store) [![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome&color=07c&logoColor=fff)](https://biomejs.dev)
+
 A minimal, lightweight React state management library built on `useSyncExternalStore`.
 
 ## Install
