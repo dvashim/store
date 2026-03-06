@@ -28,6 +28,13 @@
   "overrides": [
     {
       "includes": ["package.json"],
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedKeys": "off"
+          }
+        }
+      },
       "json": {
         "formatter": {
           "expand": "always"
