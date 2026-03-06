@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.5/schema.json",
   "extends": ["@dvashim/biome-config/react-balanced"],
   "assist": {
     "actions": {
@@ -8,6 +8,18 @@
           "level": "on",
           "options": {
             "groupByNesting": true
+          }
+        }
+      }
+    }
+  },
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "noConsole": {
+          "level": "warn",
+          "options": {
+            "allow": ["error"]
           }
         }
       }
@@ -28,6 +40,27 @@
         "rules": {
           "correctness": {
             "noNodejsModules": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["tests/**"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noExcessiveCognitiveComplexity": "off",
+            "noExcessiveLinesPerFunction": "off"
+          },
+          "nursery": {
+            "noExcessiveLinesPerFile": "off"
+          },
+          "style": {
+            "noMagicNumbers": "off"
+          },
+          "suspicious": {
+            "noEmptyBlock": "off",
+            "noEmptyBlockStatements": "off"
           }
         }
       }
