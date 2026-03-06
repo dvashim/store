@@ -2,6 +2,8 @@
 
 Create a changeset file summarizing all changes on the current branch and commit it.
 
+This project uses `@changesets/changelog-github` which automatically prepends PR number, commit hash, and author credit to each CHANGELOG entry during `changeset version`. The changeset description becomes the text after that prefix, so it must be clean, user-facing prose — no PR links, commit hashes, or author references.
+
 ## Steps
 
 ### 1. Gather context
@@ -13,7 +15,7 @@ Run these commands to understand the current branch state:
 - `git diff main...HEAD --stat` — see which files changed and how much.
 - `git diff main...HEAD` — read the actual diffs to understand what changed.
 - Read `package.json` to confirm the package name.
-- Check `.changeset/` for any existing changeset `.md` files (excluding `config.json`) to avoid duplicating work.
+- Check `.changeset/` for any existing changeset `.md` files (excluding `config.json` and `README.md`) to avoid duplicating work.
 
 If the current branch IS main, or there are no commits ahead of main, stop and inform the user that there is nothing to create a changeset for.
 
@@ -46,16 +48,27 @@ Use this exact format:
 ```
 
 Description guidelines:
-- For a **single commit**: use a concise one-line summary derived from the commit message (do not just copy the raw commit message — make it a clean, user-facing description).
-- For **multiple commits**: group related changes under markdown headings (`###`) with bullet points underneath. Focus on what changed from a user/consumer perspective, not implementation details.
+
+- The `@changesets/changelog-github` plugin renders each changeset as a list item (`- [#PR] [commit] Thanks [@author]! - <your description>`). Your description is inlined after that prefix.
+- Do NOT use markdown headings (`#`, `##`, `###`) — they break when nested inside a list item in the CHANGELOG.
+- Do NOT include PR numbers, commit hashes, author names, or GitHub links — the plugin adds these automatically.
 - Write in imperative mood (e.g., "Add support for…", "Fix issue where…").
-- Do not include commit hashes, branch names, or internal tooling details.
+- For a **single commit**: write a concise one-line summary (do not just copy the raw commit message — make it a clean, user-facing description).
+- For **multiple commits**: write a brief summary line, then a blank line, then a flat bullet list. Use **bold text** for grouping if needed, not headings. Example:
+
+```markdown
+Improve documentation and add tooling
+
+- **Docs:** Improve README installation section with separate code blocks
+- **Docs:** Fix CHANGELOG indentation for proper markdown rendering
+- **Tooling:** Add changeset slash command
+```
 
 ### 4. Commit the changeset
 
 Stage only the new changeset file and commit with this message format:
 
-```
+```text
 chore: add changeset for <branch-name> branch
 ```
 
