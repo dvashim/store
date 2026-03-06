@@ -1,5 +1,11 @@
 # @dvashim/store
 
+## 1.2.2
+
+### Patch Changes
+
+- [#19](https://github.com/dvashim/store/pull/19) [`7550cb2`](https://github.com/dvashim/store/commit/7550cb290640e69fbdaa1d302e285c45ac31c0aa) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Remove changeset command documentation in favor of local skill configuration
+
 ## 1.2.1
 
 ### Patch Changes
