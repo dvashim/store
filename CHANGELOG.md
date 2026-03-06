@@ -1,4 +1,4 @@
-# @dvashim/matzav
+# @dvashim/store
 
 ## 1.2.1
 
