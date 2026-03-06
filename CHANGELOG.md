@@ -1,5 +1,11 @@
 # @dvashim/store
 
+## 1.2.3
+
+### Patch Changes
+
+- [#21](https://github.com/dvashim/store/pull/21) [`91d5d05`](https://github.com/dvashim/store/commit/91d5d05052f6fac806b0540dc27d226bcd4e94dd) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Simplify release workflow by removing unnecessary `registry-url` and using `NPM_TOKEN` directly for npm authentication
+
 ## 1.2.2
 
 ### Patch Changes
