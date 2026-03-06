@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.6/schema.json",
   "extends": ["@dvashim/biome-config/react-balanced"],
   "assist": {
     "actions": {
@@ -13,12 +13,63 @@
       }
     }
   },
+  "linter": {
+    "rules": {
+      "suspicious": {
+        "noConsole": {
+          "level": "warn",
+          "options": {
+            "allow": ["error"]
+          }
+        }
+      }
+    }
+  },
   "overrides": [
     {
       "includes": ["package.json"],
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedKeys": "off"
+          }
+        }
+      },
       "json": {
         "formatter": {
           "expand": "always"
+        }
+      }
+    },
+    {
+      "includes": ["vitest.config.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noNodejsModules": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["tests/**"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noExcessiveCognitiveComplexity": "off",
+            "noExcessiveLinesPerFunction": "off"
+          },
+          "nursery": {
+            "noExcessiveLinesPerFile": "off"
+          },
+          "style": {
+            "noMagicNumbers": "off",
+            "useFilenamingConvention": "off"
+          },
+          "suspicious": {
+            "noEmptyBlock": "off",
+            "noEmptyBlockStatements": "off"
+          }
         }
       }
     }

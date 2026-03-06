@@ -1,13 +1,7 @@
 {
-  "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@dvashim/typescript-config/lib-dev",
-  "include": ["src"],
-  "compilerOptions": {
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "outDir": "dist",
-    "rootDir": "src",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.dev.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
