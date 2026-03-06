@@ -63,7 +63,8 @@
             "noExcessiveLinesPerFile": "off"
           },
           "style": {
-            "noMagicNumbers": "off"
+            "noMagicNumbers": "off",
+            "useFilenamingConvention": "off"
           },
           "suspicious": {
             "noEmptyBlock": "off",
