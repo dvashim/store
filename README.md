@@ -6,9 +6,15 @@ A minimal, lightweight React state management library built on `useSyncExternalS
 
 ## Install
 
+npm:
+
 ```bash
 npm install @dvashim/store
-# or
+```
+
+or pnpm:
+
+```bash
 pnpm add @dvashim/store
 ```
 
