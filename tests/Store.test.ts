@@ -383,7 +383,10 @@ describe('Store', () => {
 
       expect(fn2).toHaveBeenCalledOnce()
       expect(consoleSpy).toHaveBeenCalledOnce()
-      expect(consoleSpy).toHaveBeenCalledWith('Error in subscriber:', expect.any(Error))
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Error in subscriber',
+        expect.any(Error)
+      )
       consoleSpy.mockRestore()
     })
 
@@ -494,7 +497,10 @@ describe('Store', () => {
       })
       store.set(1)
 
-      expect(consoleSpy).toHaveBeenCalledWith('Error in subscriber:', 'string error')
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Error in subscriber',
+        'string error'
+      )
       consoleSpy.mockRestore()
     })
   })
