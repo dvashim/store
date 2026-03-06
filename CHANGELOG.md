@@ -4,35 +4,37 @@
 
 ### Minor Changes
 
-- [#14](https://github.com/dvashim/store/pull/14) [`f4dc9e6`](https://github.com/dvashim/store/commit/f4dc9e6d03021ca89ae062af7b2e3d8b5a52b306) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - ### Refactored core implementation
+- [#14](https://github.com/dvashim/store/pull/14) [`f4dc9e6`](https://github.com/dvashim/store/commit/f4dc9e6d03021ca89ae062af7b2e3d8b5a52b306) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)!
 
-  - Reorganized `Store` class methods and improved state management with object-based `QueueItem` type
-  - Enhanced `useStore` hook with improved selector handling and memoization
-  - Adjusted `createStore` function signatures for clarity and consistency
+### Refactored core implementation
 
-  ### Added comprehensive test suite
+- Reorganized `Store` class methods and improved state management with object-based `QueueItem` type
+- Enhanced `useStore` hook with improved selector handling and memoization
+- Adjusted `createStore` function signatures for clarity and consistency
 
-  - Added unit tests for `Store`, `createStore`, and `useStore`
-  - Added type inference tests (`test-d.ts`) for `Store`, `createStore`, and `useStore`
+### Added comprehensive test suite
 
-  ### Added CI and tooling
+- Added unit tests for `Store`, `createStore`, and `useStore`
+- Added type inference tests (`test-d.ts`) for `Store`, `createStore`, and `useStore`
 
-  - Added CI workflow for pull requests and updated release workflow
-  - Added `.node-version` file for consistent Node.js version
-  - Updated Biome configuration with enhanced linter rules
-  - Consolidated TypeScript configuration with project references (`tsconfig.dev.json`, `tsconfig.node.json`, `tests/tsconfig.json`)
-  - Added Vitest configuration
+### Added CI and tooling
 
-  ### Added documentation
+- Added CI workflow for pull requests and updated release workflow
+- Added `.node-version` file for consistent Node.js version
+- Updated Biome configuration with enhanced linter rules
+- Consolidated TypeScript configuration with project references (`tsconfig.dev.json`, `tsconfig.node.json`, `tests/tsconfig.json`)
+- Added Vitest configuration
 
-  - Added README with installation instructions, API documentation, and usage examples
-  - Added CLAUDE.md with project conventions
+### Added documentation
 
-  ### Other fixes
+- Added README with installation instructions, API documentation, and usage examples
+- Added CLAUDE.md with project conventions
 
-  - Updated dependencies for compatibility
-  - Added `react` and `react-dom` as peer dependencies
-  - Changed package access level to public
+### Other fixes
+
+- Updated dependencies for compatibility
+- Added `react` and `react-dom` as peer dependencies
+- Changed package access level to public
 
 ## 1.1.3
 
