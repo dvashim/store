@@ -1,8 +1,6 @@
 {
   "description": "Yet another state management in React",
   "license": "MIT",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "name": "@dvashim/store",
   "packageManager": "pnpm@10.30.3",
   "type": "module",
@@ -31,8 +29,9 @@
   },
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "default": "./dist/index.js"
     }
   },
   "files": [
@@ -48,8 +47,8 @@
     "typescript"
   ],
   "peerDependencies": {
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "publishConfig": {
     "access": "public",
