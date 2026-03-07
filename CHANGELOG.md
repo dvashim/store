@@ -1,5 +1,15 @@
 # @dvashim/store
 
+## 1.2.4
+
+### Patch Changes
+
+- [#23](https://github.com/dvashim/store/pull/23) [`e481e9e`](https://github.com/dvashim/store/commit/e481e9e6e2ba3f20ab125b2ff0972d2804c445a3) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Prevent infinite loops in subscriber updates and improve error handling during state flush
+
+  - **Fix:** Add a safety limit of 100 re-entrant updates to prevent infinite loops in subscribers
+  - **Fix:** Catch updater errors individually so remaining queued items still process; rethrow the first error after the queue drains
+  - **Docs:** Update README to document re-entrant update safety limit and error handling behavior
+
 ## 1.2.3
 
 ### Patch Changes
