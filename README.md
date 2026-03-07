@@ -78,7 +78,9 @@ count$.set(5, { force: true })
 
 #### `store.update(updater, options?)`
 
-Derives the next state via an updater function. Re-entrant calls from within a subscriber are queued and flushed in FIFO order.
+Derives the next state via an updater function. Re-entrant calls from within a subscriber are queued and flushed in FIFO order. A safety limit of 100 re-entrant updates prevents infinite loops.
+
+If an updater throws, remaining queued items are still processed and the first error is rethrown after the queue drains.
 
 ```ts
 count$.update((n) => n + 1)
