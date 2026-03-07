@@ -1,5 +1,15 @@
 # @dvashim/store
 
+## 1.2.5
+
+### Patch Changes
+
+- [#25](https://github.com/dvashim/store/pull/25) [`e7bb95c`](https://github.com/dvashim/store/commit/e7bb95ccb63c21cffd351145ddac2e1ae49252d6) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update TypeScript config and consolidate CI workflows
+
+  - **Deps:** Update @dvashim/typescript-config to 1.1.11
+  - **CI:** Add `ci` script combining check and test, use it in CI and release workflows
+  - **Docs:** Update CLAUDE.md to reflect new CI script
+
 ## 1.2.4
 
 ### Patch Changes
