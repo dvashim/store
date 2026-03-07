@@ -30,7 +30,7 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
-      - run: pnpm ci
+      - run: pnpm run ci
       - run: pnpm build
 
       - name: Create Version Pull Request
