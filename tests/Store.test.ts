@@ -440,42 +440,12 @@ describe('Store', () => {
 
     it('remains functional after updater throws', () => {
       const store = new Store(0)
-      const fn = vi.fn()
-      store.subscribe(fn)
-
-      try {
-        store.update(() => {
-          throw new Error('fail')
-        })
-      } catch {}
-
-      store.set(1)
-      expect(store.get()).toBe(1)
-      expect(fn).toHaveBeenCalledOnce()
-    })
-
-    it('clears queue when updater throws', () => {
-      const store = new Store(0)
       const calls: number[] = []
 
       store.subscribe(() => {
         calls.push(store.get())
       })
 
-      // First set succeeds and queues a re-entrant update
-      store.subscribe(() => {
-        if (store.get() === 1) {
-          store.set(99) // queued
-        }
-      })
-
-      store.set(1)
-      // Subscriber 1 sees 1, subscriber 2 queues 99, then subscriber 1 sees 99
-      expect(calls).toEqual([1, 99])
-
-      calls.length = 0
-
-      // Now test that a throwing updater clears the queue
       try {
         store.update(() => {
           throw new Error('fail')
@@ -485,6 +455,47 @@ describe('Store', () => {
       store.set(10)
       expect(store.get()).toBe(10)
       expect(calls).toEqual([10])
+    })
+
+    it('processes remaining queue items when a re-entrant updater throws', () => {
+      const store = new Store(0)
+      const calls: number[] = []
+
+      store.subscribe(() => {
+        calls.push(store.get())
+        if (store.get() === 1) {
+          store.update(() => {
+            throw new Error('boom')
+          })
+          store.set(99)
+        }
+      })
+
+      // set(1) commits, subscriber queues [thrower, set(99)]
+      // thrower is caught per-item, set(99) still processes
+      expect(() => store.set(1)).toThrow('boom')
+      expect(calls).toEqual([1, 99])
+      expect(store.get()).toBe(99)
+    })
+
+    it('rethrows the first updater error after draining the queue', () => {
+      const store = new Store(0)
+
+      store.subscribe(() => {
+        if (store.get() === 1) {
+          store.update(() => {
+            throw new Error('first')
+          })
+          store.update(() => {
+            throw new Error('second')
+          })
+          store.set(42)
+        }
+      })
+
+      // Both updaters fail, set(42) succeeds, first error is rethrown
+      expect(() => store.set(1)).toThrow('first')
+      expect(store.get()).toBe(42)
     })
 
     it('handles non-Error thrown values', () => {
@@ -502,6 +513,107 @@ describe('Store', () => {
         'string error'
       )
       consoleSpy.mockRestore()
+    })
+  })
+
+  describe('flush iteration limit', () => {
+    it('throws when re-entrant updates exceed MAX_FLUSH_ITERATIONS', () => {
+      const store = new Store(0)
+
+      store.subscribe(() => {
+        store.set(store.get() + 1)
+      })
+
+      expect(() => store.set(1)).toThrow(
+        'Store: exceeded 100 re-entrant updates'
+      )
+    })
+
+    it('processes exactly MAX_FLUSH_ITERATIONS items before throwing', () => {
+      const store = new Store(0)
+      let updateCount = 0
+
+      store.subscribe(() => {
+        updateCount += 1
+        store.set(store.get() + 1)
+      })
+
+      try {
+        store.set(1)
+      } catch {}
+
+      expect(updateCount).toBe(100)
+    })
+
+    it('clears the queue when the limit is exceeded', () => {
+      const store = new Store(0)
+      let shouldLoop = true
+
+      store.subscribe(() => {
+        if (shouldLoop) {
+          store.set(store.get() + 1)
+        }
+      })
+
+      try {
+        store.set(1)
+      } catch {}
+
+      // Disable the loop, then verify the store is still usable
+      shouldLoop = false
+      const fn = vi.fn()
+      store.subscribe(fn)
+      store.set(0)
+      expect(fn).toHaveBeenCalledOnce()
+      expect(store.get()).toBe(0)
+    })
+
+    it('preserves the last committed state when the limit is exceeded', () => {
+      const store = new Store(0)
+
+      store.subscribe(() => {
+        store.set(store.get() + 1)
+      })
+
+      try {
+        store.set(1)
+      } catch {}
+
+      // State should reflect the last successful commit (item 100)
+      expect(store.get()).toBe(100)
+    })
+
+    it('does not throw for updates within the limit', () => {
+      const store = new Store(0)
+
+      store.subscribe(() => {
+        if (store.get() < 100) {
+          store.set(store.get() + 1)
+        }
+      })
+
+      expect(() => store.set(1)).not.toThrow()
+      expect(store.get()).toBe(100)
+    })
+
+    it('resets the iteration counter between separate flush cycles', () => {
+      const store = new Store(0)
+      let shouldLoop = false
+
+      store.subscribe(() => {
+        if (shouldLoop && store.get() < 50) {
+          store.set(store.get() + 1)
+        }
+      })
+
+      // First flush: 50 re-entrant updates
+      shouldLoop = true
+      store.set(1)
+      expect(store.get()).toBe(50)
+
+      // Second flush: another 50 — should not throw (counter resets)
+      store.set(1)
+      expect(store.get()).toBe(50)
     })
   })
 })
