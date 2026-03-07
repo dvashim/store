@@ -10,9 +10,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 pnpm build          # Build with tsc (outputs to dist/)
-pnpm check          # Clean + run all checks (biome + typecheck)
+pnpm check          # Run all checks (biome + typecheck)
 pnpm check:biome    # Lint and format check via Biome
 pnpm check:ts       # TypeScript type checking (src + tests, no emit)
+pnpm ci             # Run all checks + tests (used in CI workflows)
 pnpm test           # Run tests once (vitest run)
 pnpm test:watch     # Run tests in watch mode (vitest)
 pnpm watch          # Build in watch mode
@@ -39,4 +40,4 @@ The entire library is four files in `src/`:
 
 ## Release
 
-Push to `main` triggers the GitHub Actions workflow: runs `pnpm check`, builds, then uses changesets to create version PRs or publish to npm.
+Push to `main` triggers the GitHub Actions workflow: runs `pnpm ci` (check + test), builds, then uses changesets to create version PRs or publish to npm.
