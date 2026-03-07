@@ -15,6 +15,9 @@
   },
   "linter": {
     "rules": {
+      "nursery": {
+        "noIncrementDecrement": "off"
+      },
       "suspicious": {
         "noConsole": {
           "level": "warn",

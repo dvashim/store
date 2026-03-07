@@ -6,6 +6,9 @@ type QueueItem<T> = {
   options: UpdateOptions | undefined
 }
 
+const NO_ERROR = Symbol('no error')
+const MAX_FLUSH_ITERATIONS = 100
+
 /**
  * Reactive state container with subscription-based change notification.
  * @typeParam T - The type of the stored state.
@@ -63,12 +66,27 @@ export class Store<T> {
     }
 
     this.#notifying = true
+    let iterations = 0
+    let firstError: unknown = NO_ERROR
 
     try {
       let q = this.#queue.shift()
       while (q) {
-        const state = q.updater(this.#state)
-        this.#commit(state, q.options)
+        if (++iterations > MAX_FLUSH_ITERATIONS) {
+          throw new Error(
+            `Store: exceeded ${MAX_FLUSH_ITERATIONS} re-entrant updates. This likely indicates an infinite loop in a subscriber.`
+          )
+        }
+
+        try {
+          const state = q.updater(this.#state)
+          this.#commit(state, q.options)
+        } catch (error) {
+          if (firstError === NO_ERROR) {
+            firstError = error
+          }
+        }
+
         q = this.#queue.shift()
       }
     } catch (error) {
@@ -76,6 +94,10 @@ export class Store<T> {
       throw error
     } finally {
       this.#notifying = false
+    }
+
+    if (firstError !== NO_ERROR) {
+      throw firstError
     }
   }
 
