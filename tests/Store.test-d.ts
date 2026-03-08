@@ -18,7 +18,6 @@ describe('Store types', () => {
       expectTypeOf(store).toEqualTypeOf<Store<string | null>>()
     })
 
-    // biome-ignore lint/nursery/useExpect: testing type error
     it('rejects missing initial state', () => {
       // @ts-expect-error — expected 1 argument, but got 0
       // biome-ignore lint/nursery/noFloatingClasses: allowing instantiation of Store without args for testing type error
@@ -61,7 +60,6 @@ describe('Store types', () => {
       expectTypeOf(store.set(1)).toEqualTypeOf<void>()
     })
 
-    // biome-ignore lint/nursery/useExpect: testing type error
     it('rejects wrong types', () => {
       const store = new Store(0)
       // @ts-expect-error — string is not assignable to number
@@ -82,14 +80,12 @@ describe('Store types', () => {
       expectTypeOf(store.update((v) => v + 1)).toEqualTypeOf<void>()
     })
 
-    // biome-ignore lint/nursery/useExpect: testing type error
     it('rejects updater returning wrong type', () => {
       const store = new Store(0)
       // @ts-expect-error — string is not assignable to number
       store.update(() => 'wrong')
     })
 
-    // biome-ignore lint/nursery/useExpect: testing type error
     it('rejects updater with wrong parameter type', () => {
       const store = new Store(0)
       // @ts-expect-error — (s: string) => number is not assignable to (prevValue: number) => number
@@ -98,9 +94,21 @@ describe('Store types', () => {
   })
 
   describe('subscribe', () => {
+    it('accepts a (state: T, prevState: T) => void callback', () => {
+      const store = new Store(0)
+      expectTypeOf(store.subscribe)
+        .parameter(0)
+        .toEqualTypeOf<(state: number, prevState: number) => void>()
+    })
+
     it('accepts a () => void callback', () => {
       const store = new Store(0)
-      expectTypeOf(store.subscribe).parameter(0).toEqualTypeOf<() => void>()
+      store.subscribe(() => {})
+    })
+
+    it('accepts a callback using only state', () => {
+      const store = new Store(0)
+      store.subscribe((_state: number) => {})
     })
 
     it('returns an unsubscribe function () => void', () => {
@@ -109,11 +117,10 @@ describe('Store types', () => {
       expectTypeOf(unsub).toEqualTypeOf<() => void>()
     })
 
-    // biome-ignore lint/nursery/useExpect: testing type error
-    it('rejects callbacks with parameters', () => {
+    it('rejects callbacks with wrong parameter types', () => {
       const store = new Store(0)
-      // @ts-expect-error — (value: number) => void is not assignable to () => void
-      store.subscribe((_value: number) => {})
+      // @ts-expect-error — (value: string) => void is not assignable to (state: number, prevState: number) => void
+      store.subscribe((_value: string) => {})
     })
   })
 
