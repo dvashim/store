@@ -1,6 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest'
 import { Store } from '@/Store'
-import type { Selector } from '@/useStore'
+import type { Selector } from '@/types'
 import { useStore } from '@/useStore'
 
 describe('useStore types', () => {
@@ -82,7 +82,6 @@ describe('useStore types', () => {
       })
     })
 
-    // biome-ignore lint/nursery/useExpect: testing type error
     it('rejects selector with wrong parameter type', () => {
       const store = new Store(42)
       // @ts-expect-error — (s: string) => number is not assignable to Selector<number, number>
@@ -106,14 +105,12 @@ describe('useStore types', () => {
   })
 
   describe('overload discrimination', () => {
-    // biome-ignore lint/nursery/useExpect: testing type error
     it('rejects equalityFn without selector (no such overload)', () => {
       const store = new Store(42)
       // @ts-expect-error — no overload accepts (store, equalityFn) without selector
       useStore(store, (a: number, b: number) => a === b)
     })
 
-    // biome-ignore lint/nursery/useExpect: testing type error
     it('rejects extra arguments', () => {
       const store = new Store(42)
       // @ts-expect-error — expected 1-2 arguments, but got 3

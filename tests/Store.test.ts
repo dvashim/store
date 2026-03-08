@@ -181,6 +181,16 @@ describe('Store', () => {
   })
 
   describe('subscribe', () => {
+    it('passes state and prevState to subscriber callback', () => {
+      const store = new Store(0)
+      const fn = vi.fn()
+      store.subscribe(fn)
+      store.set(1)
+      expect(fn).toHaveBeenCalledWith(1, 0)
+      store.set(2)
+      expect(fn).toHaveBeenCalledWith(2, 1)
+    })
+
     it('returns an unsubscribe function', () => {
       const store = new Store(0)
       const fn = vi.fn()

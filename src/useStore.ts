@@ -1,7 +1,6 @@
 import { useDebugValue, useMemo, useRef, useSyncExternalStore } from 'react'
 import type { Store } from './Store'
-
-type Selector<T, U> = (state: T) => U
+import type { Selector } from './types'
 
 /**
  * Subscribes a React component to a {@link Store} and returns its current state.
@@ -50,4 +49,3 @@ function useStore<T, U = T>(store: Store<T>, selector?: Selector<T, U>): T | U {
 }
 
 export { useStore }
-export type { Selector }
