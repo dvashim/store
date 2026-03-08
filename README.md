@@ -92,11 +92,11 @@ todos$.update((todos) => [...todos, { text: 'Walk dog', done: false }])
 
 #### `store.subscribe(fn)`
 
-Registers a callback invoked on each state change. Returns an unsubscribe function.
+Registers a callback invoked on each state change with the new and previous state. Returns an unsubscribe function.
 
 ```ts
-const unsubscribe = count$.subscribe(() => {
-  console.log('Count changed:', count$.get())
+const unsubscribe = count$.subscribe((state, prevState) => {
+  console.log(`Count changed from ${prevState} to ${state}`)
 })
 
 // Later...
