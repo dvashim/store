@@ -24,12 +24,13 @@ Tests use **Vitest** with **jsdom** environment and **@testing-library/react**. 
 
 ## Architecture
 
-The entire library is four files in `src/`:
+The library source lives in `src/`:
 
-- **`Store.ts`** — Core `Store<T>` class using ES2022 private fields (`#state`, `#subscribers`). Exposes `get()`, `set()`, `update()`, `subscribe()`. Uses `Object.is` for equality checks in `#commit()`; pass `{ force: true }` to `set()`/`update()` to bypass. Re-entrant updates (calling `set`/`update` from within a subscriber) are queued in `#queue` and drained in FIFO order by `#flush()`. `#flush()` has a `MAX_FLUSH_ITERATIONS` (100) guard against infinite re-entrant loops. Updater errors are caught per-item (remaining queue items still process); the first error is rethrown after the queue drains. Subscriber errors are caught individually and logged via `console.error`. Spreads subscribers into a snapshot array before iterating to safely handle mutations during notification.
-- **`useStore.ts`** — React hook wrapping `useSyncExternalStore`. Supports an optional selector for derived state. Spreads memoized args into `useSyncExternalStore` via `useMemo`. Uses `useDebugValue` for DevTools.
+- **`Store.ts`** — Core `Store<T>` class using ES2022 private fields (`#state`, `#subscribers`). Exposes `get()`, `set()`, `update()`, `subscribe()`. Subscribers receive `(state: T, prevState: T)` on each change. Uses `Object.is` for equality checks in `#commit()`; pass `{ force: true }` to `set()`/`update()` to bypass. Re-entrant updates (calling `set`/`update` from within a subscriber) are queued in `#queue` and drained in FIFO order by `#flush()`. `#flush()` has a `MAX_FLUSH_ITERATIONS` (100) guard against infinite re-entrant loops. Updater errors are caught per-item (remaining queue items still process); the first error is rethrown after the queue drains. Subscriber errors are caught individually and logged via `console.error`. Spreads subscribers into a snapshot array before iterating to safely handle mutations during notification.
+- **`useStore.ts`** — React hook wrapping `useSyncExternalStore`. Supports an optional `Selector<T, U>` (imported from `types.ts`) for derived state. Uses `store.subscribe.bind(store)` directly — TypeScript allows `() => void` to be passed where `Subscriber<T>` is expected (fewer params assignable to more params). Uses `useDebugValue` for DevTools.
+- **`types.ts`** — Shared type definitions. Exports `Selector<T, U> = (state: T) => U`.
 - **`createStore.ts`** — Factory function with TypeScript overloads to create `Store` instances (with initial state, or without for `Store<T | undefined>`).
-- **`index.ts`** — Re-exports all public API.
+- **`index.ts`** — Re-exports `createStore`, `Store`, and `useStore`. Note: `types.ts` is not re-exported from the barrel.
 
 ## Tooling
 
