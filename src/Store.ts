@@ -1,4 +1,4 @@
-type Subscriber = () => void
+type Subscriber<T> = (state: T, prevState: T) => void
 type Updater<T> = (prevValue: T) => T
 type UpdateOptions = { force?: boolean }
 type QueueItem<T> = {
@@ -14,7 +14,7 @@ const MAX_FLUSH_ITERATIONS = 100
  * @typeParam T - The type of the stored state.
  */
 export class Store<T> {
-  readonly #subscribers = new Set<Subscriber>()
+  readonly #subscribers = new Set<Subscriber<T>>()
   readonly #queue: QueueItem<T>[] = []
   #notifying = false
   #state: T
@@ -28,7 +28,7 @@ export class Store<T> {
    * @param fn - Callback invoked on each state change.
    * @returns An unsubscribe function that removes the subscriber.
    */
-  subscribe(fn: Subscriber): () => void {
+  subscribe(fn: Subscriber<T>): () => void {
     this.#subscribers.add(fn)
     return () => this.#subscribers.delete(fn)
   }
@@ -106,11 +106,12 @@ export class Store<T> {
       return
     }
 
+    const prevState = this.#state
     this.#state = nextState
 
     for (const listener of [...this.#subscribers]) {
       try {
-        listener()
+        listener(nextState, prevState)
       } catch (error) {
         console.error('Error in subscriber', error)
       }
