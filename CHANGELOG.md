@@ -1,5 +1,14 @@
 # @dvashim/store
 
+## 1.3.0
+
+### Minor Changes
+
+- [#28](https://github.com/dvashim/store/pull/28) [`1546a84`](https://github.com/dvashim/store/commit/1546a84b2ac332db0e94f3cc7d23aceee3cb9680) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Enhance `store.subscribe` to pass `(state, prevState)` to subscriber callbacks
+
+  - **Core:** `subscribe` callbacks now receive `(state: T, prevState: T)` instead of no arguments, enabling subscribers to react based on state diffs without calling `store.get()`
+  - **Types:** Extract `Selector<T, U>` type into a shared `types.ts` module and re-export it from the package barrel
+
 ## 1.2.5
 
 ### Patch Changes
