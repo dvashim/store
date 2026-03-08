@@ -55,7 +55,6 @@ describe('createStore types', () => {
       .toEqualTypeOf<string | undefined>()
   })
 
-  // biome-ignore lint/nursery/useExpect: allowing @ts-expect-error for testing type errors
   it('rejects mismatched types at compile time', () => {
     const store = createStore(42)
     // @ts-expect-error — string is not assignable to number
