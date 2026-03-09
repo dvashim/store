@@ -1,5 +1,6 @@
 import { describe, expectTypeOf, it } from 'vitest'
 import { Store } from '@/Store'
+import type { SourceStore } from '@/types'
 
 describe('Store types', () => {
   describe('constructor', () => {
@@ -152,6 +153,18 @@ describe('Store types', () => {
     it('works with function types as state', () => {
       const store = new Store<() => string>(() => 'hello')
       expectTypeOf(store.get()).toEqualTypeOf<() => string>()
+    })
+  })
+
+  describe('implements SourceStore', () => {
+    it('is assignable to SourceStore<T>', () => {
+      const store = new Store(42)
+      expectTypeOf(store).toMatchTypeOf<SourceStore<number>>()
+    })
+
+    it('is not assignable to SourceStore of wrong type', () => {
+      const store = new Store(42)
+      expectTypeOf(store).not.toMatchTypeOf<SourceStore<string>>()
     })
   })
 })
