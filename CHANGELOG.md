@@ -1,5 +1,11 @@
 # @dvashim/store
 
+## 1.4.3
+
+### Patch Changes
+
+- [#36](https://github.com/dvashim/store/pull/36) [`721860d`](https://github.com/dvashim/store/commit/721860d6c257491e94e1d591409ffa1204260d3f) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update roadmap with planned features for `useStore`, `ComputedStore`, and `Store` API enhancements
+
 ## 1.4.2
 
 ### Patch Changes
