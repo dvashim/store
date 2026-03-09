@@ -1,5 +1,11 @@
 # @dvashim/store
 
+## 1.4.1
+
+### Patch Changes
+
+- [#32](https://github.com/dvashim/store/pull/32) [`8cbfd11`](https://github.com/dvashim/store/commit/8cbfd11b576668f3f56e977d937103d79fe861ae) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Re-export `ComputedStore` from the package barrel (`index.ts`)
+
 ## 1.4.0
 
 ### Minor Changes
