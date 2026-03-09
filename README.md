@@ -103,6 +103,52 @@ const unsubscribe = count$.subscribe((state, prevState) => {
 unsubscribe()
 ```
 
+### `ComputedStore`
+
+A read-only reactive store that derives its value from a source store using a selector. Automatically updates when the source changes. Accepts any `SourceStore<T>` (including `Store` or another `ComputedStore`) as its source.
+
+> **Note:** `ComputedStore` is not yet re-exported from the barrel. Import it directly:
+>
+> ```ts
+> import { ComputedStore } from '@dvashim/store/ComputedStore'
+> ```
+
+```ts
+const todos$ = createStore([
+  { text: 'Buy milk', done: true },
+  { text: 'Walk dog', done: false },
+])
+
+const remaining$ = new ComputedStore(todos$, (todos) =>
+  todos.filter((t) => !t.done).length
+)
+
+remaining$.get() // 1
+remaining$.subscribe((count, prev) => console.log(`${prev} → ${count}`))
+```
+
+#### Chaining
+
+`ComputedStore` implements `SourceStore<U>`, so it can be used as the source for another `ComputedStore`.
+
+```ts
+const count$ = new ComputedStore(todos$, (todos) => todos.length)
+const label$ = new ComputedStore(count$, (n) => `${n} items`)
+label$.get() // "2 items"
+```
+
+#### `computed.connect()` / `computed.disconnect()`
+
+Control the subscription to the source store. After `disconnect()`, the derived value stops updating and `get()` returns the last known value. Call `connect()` to resume.
+
+```ts
+remaining$.disconnect()
+remaining$.isConnected // false
+
+remaining$.connect()
+remaining$.isConnected // true
+```
+
 ### `useStore(store, selector?)`
 
 React hook that subscribes a component to a store.
@@ -126,6 +172,21 @@ function UserName() {
   return <p>{name}</p>
 }
 ```
+
+### Types
+
+The following types are exported from the package:
+
+```ts
+import type { Selector, Subscriber, UpdateOptions, SourceStore } from '@dvashim/store'
+```
+
+| Type | Definition |
+| ---- | ---------- |
+| `Selector<T, U>` | `(state: T) => U` |
+| `Subscriber<T>` | `(state: T, prevState: T) => void` |
+| `UpdateOptions` | `{ force?: boolean }` |
+| `SourceStore<T>` | `{ get(): T; subscribe(fn: Subscriber<T>): () => void }` — shared interface implemented by both `Store` and `ComputedStore` |
 
 ## Patterns
 
