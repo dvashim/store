@@ -107,13 +107,10 @@ unsubscribe()
 
 A read-only reactive store that derives its value from a source store using a selector. Automatically updates when the source changes. Accepts any `SourceStore<T>` (including `Store` or another `ComputedStore`) as its source.
 
-> **Note:** `ComputedStore` is not yet re-exported from the barrel. Import it directly:
->
-> ```ts
-> import { ComputedStore } from '@dvashim/store/ComputedStore'
-> ```
-
 ```ts
+import { createStore, ComputedStore } from '@dvashim/store'
+
+
 const todos$ = createStore([
   { text: 'Buy milk', done: true },
   { text: 'Walk dog', done: false },
