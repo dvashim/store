@@ -1,5 +1,11 @@
 # @dvashim/store
 
+## 1.4.2
+
+### Patch Changes
+
+- [#34](https://github.com/dvashim/store/pull/34) [`83d2656`](https://github.com/dvashim/store/commit/83d2656049d41899a582e92d34783f9beb2ba221) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update @dvashim/typescript-config to 1.1.12
+
 ## 1.4.1
 
 ### Patch Changes
