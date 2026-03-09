@@ -46,18 +46,3 @@ export class ComputedStore<T, U> implements SourceStore<U> {
     return this.#derived.subscribe(fn)
   }
 }
-
-// const s = new Store([1, 2])
-// const len = new ComputedStore(s, (state) => state.length)
-// const lenString = new ComputedStore(len, (state) => `length: ${state}`)
-// const sum = new ComputedStore(s, (state) => state.reduce((a, b) => a + b, 0))
-// console.log(len.get()) // 2
-// console.log(sum.get()) // 3
-// console.log(lenString.get()) // length: 2
-
-// const len1 = new SubStore(s, (state) => state.length)
-// const lenString1 = new SubStore(len1, (state) => `length: ${state}`)
-// const sum1 = new SubStore(s, (state) => state.reduce((a, b) => a + b, 0))
-// console.log(len1.get()) // 2
-// console.log(sum1.get()) // 3
-// console.log(lenString1.get()) // length: 2

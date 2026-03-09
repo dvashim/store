@@ -175,15 +175,13 @@ function UserName() {
 The following types are exported from the package:
 
 ```ts
-import type { Selector, Subscriber, UpdateOptions, SourceStore } from '@dvashim/store'
+import type { Selector, Subscriber } from '@dvashim/store'
 ```
 
 | Type | Definition |
 | ---- | ---------- |
 | `Selector<T, U>` | `(state: T) => U` |
 | `Subscriber<T>` | `(state: T, prevState: T) => void` |
-| `UpdateOptions` | `{ force?: boolean }` |
-| `SourceStore<T>` | `{ get(): T; subscribe(fn: Subscriber<T>): () => void }` — shared interface implemented by both `Store` and `ComputedStore` |
 
 ## Patterns
 
