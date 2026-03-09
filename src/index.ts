@@ -1,5 +1,5 @@
 export * from './ComputedStore'
 export * from './createStore'
 export * from './Store'
-export * from './types'
+export type { Selector, Subscriber } from './types'
 export * from './useStore'
