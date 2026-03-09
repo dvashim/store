@@ -1,5 +1,14 @@
 # @dvashim/store
 
+## 1.4.4
+
+### Patch Changes
+
+- [#38](https://github.com/dvashim/store/pull/38) [`84adbfe`](https://github.com/dvashim/store/commit/84adbfe20350581d0f4141447d4c0d0e5504fc80) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Narrow public type exports to `Selector` and `Subscriber` only, keeping `SourceStore` and `UpdateOptions` as internal types
+
+  - Remove commented-out example code from `ComputedStore`
+  - Update README and CLAUDE.md to reflect the changed type exports
+
 ## 1.4.3
 
 ### Patch Changes
