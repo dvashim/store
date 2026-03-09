@@ -1,6 +1,6 @@
-type Subscriber<T> = (state: T, prevState: T) => void
+import type { SourceStore, Subscriber, UpdateOptions } from './types'
+
 type Updater<T> = (prevValue: T) => T
-type UpdateOptions = { force?: boolean }
 type QueueItem<T> = {
   updater: Updater<T>
   options: UpdateOptions | undefined
@@ -13,7 +13,7 @@ const MAX_FLUSH_ITERATIONS = 100
  * Reactive state container with subscription-based change notification.
  * @typeParam T - The type of the stored state.
  */
-export class Store<T> {
+export class Store<T> implements SourceStore<T> {
   readonly #subscribers = new Set<Subscriber<T>>()
   readonly #queue: QueueItem<T>[] = []
   #notifying = false
