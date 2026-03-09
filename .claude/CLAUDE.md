@@ -27,11 +27,11 @@ Tests use **Vitest** with **jsdom** environment and **@testing-library/react**. 
 The library source lives in `src/`:
 
 - **`Store.ts`** — Core `Store<T>` class implementing `SourceStore<T>`, using ES2022 private fields (`#state`, `#subscribers`). Exposes `get()`, `set()`, `update()`, `subscribe()`. Subscribers receive `(state: T, prevState: T)` on each change. Uses `Object.is` for equality checks in `#commit()`; pass `{ force: true }` to `set()`/`update()` to bypass. Re-entrant updates (calling `set`/`update` from within a subscriber) are queued in `#queue` and drained in FIFO order by `#flush()`. `#flush()` has a `MAX_FLUSH_ITERATIONS` (100) guard against infinite re-entrant loops. Updater errors are caught per-item (remaining queue items still process); the first error is rethrown after the queue drains. Subscriber errors are caught individually and logged via `console.error`. Spreads subscribers into a snapshot array before iterating to safely handle mutations during notification.
-- **`ComputedStore.ts`** — Reactive derived store using composition. Takes a `SourceStore<T>` and a `Selector<T, U>`, creates an internal `Store<U>` that auto-updates when the source changes. Implements `SourceStore<U>` so it can be chained (a `ComputedStore` can be the source for another `ComputedStore`). Exposes `get()`, `subscribe()`, `connect()`, `disconnect()`, and `isConnected`. Not yet re-exported from the barrel (`index.ts`).
+- **`ComputedStore.ts`** — Reactive derived store using composition. Takes a `SourceStore<T>` and a `Selector<T, U>`, creates an internal `Store<U>` that auto-updates when the source changes. Implements `SourceStore<U>` so it can be chained (a `ComputedStore` can be the source for another `ComputedStore`). Exposes `get()`, `subscribe()`, `connect()`, `disconnect()`, and `isConnected`.
 - **`useStore.ts`** — React hook wrapping `useSyncExternalStore`. Supports an optional `Selector<T, U>` for derived state. Selector is stored in a `useRef` to avoid resubscribing when inline selectors change reference. Uses `store.subscribe.bind(store)` directly — TypeScript allows `() => void` where `Subscriber<T>` is expected. Uses `useDebugValue` for DevTools.
 - **`types.ts`** — Shared type definitions: `Selector<T, U>`, `Subscriber<T>`, `UpdateOptions`, `SourceStore<T>` (interface with `get()` and `subscribe()`).
 - **`createStore.ts`** — Factory function with TypeScript overloads to create `Store` instances (with initial state, or without for `Store<T | undefined>`).
-- **`index.ts`** — Re-exports `createStore`, `Store`, `types`, and `useStore`.
+- **`index.ts`** — Re-exports `ComputedStore`, `createStore`, `Store`, `types`, and `useStore`.
 
 ## Tooling
 
