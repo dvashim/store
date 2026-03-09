@@ -1,5 +1,16 @@
 # @dvashim/store
 
+## 1.4.0
+
+### Minor Changes
+
+- [#30](https://github.com/dvashim/store/pull/30) [`20315f8`](https://github.com/dvashim/store/commit/20315f8fe2753e90429f987a8062a6b5e73324a9) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Add ComputedStore class for reactive derived state
+
+  - **ComputedStore:** New read-only reactive store that derives its value from a source store via a selector, with `connect()`/`disconnect()` lifecycle and chaining support
+  - **SourceStore\<T\> interface:** Shared contract (`get()` + `subscribe()`) implemented by both `Store` and `ComputedStore`, enabling interoperability
+  - **Types:** Export `Subscriber<T>`, `UpdateOptions`, and `SourceStore<T>` from `types.ts`
+  - **Store:** `Store<T>` now implements `SourceStore<T>`
+
 ## 1.3.0
 
 ### Minor Changes
