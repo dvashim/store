@@ -136,7 +136,7 @@ label$.get() // "2 items"
 
 #### `computed.connect()` / `computed.disconnect()`
 
-Control the subscription to the source store. After `disconnect()`, the derived value stops updating and `get()` returns the last known value. Call `connect()` to resume.
+Control the subscription to the source store. After `disconnect()`, the derived value stops updating and `get()` returns the last known value. Call `connect()` to resume — it immediately syncs the derived value with the current source state before resubscribing.
 
 ```ts
 remaining$.disconnect()
