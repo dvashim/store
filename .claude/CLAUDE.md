@@ -24,14 +24,14 @@ Tests use **Vitest** with **jsdom** environment and **@testing-library/react**. 
 
 ## Architecture
 
-The library source lives in `src/`:
+The library source lives in `src/` (~300 lines across 6 files). The central abstraction is the `SourceStore<T>` interface (defined in `types.ts`): anything with `get()` and `subscribe()` methods. Both `Store` and `ComputedStore` implement it, which enables chaining.
 
-- **`Store.ts`** — Core `Store<T>` class implementing `SourceStore<T>`, using ES2022 private fields (`#state`, `#subscribers`). Exposes `get()`, `set()`, `update()`, `subscribe()`. Subscribers receive `(state: T, prevState: T)` on each change. Uses `Object.is` for equality checks in `#commit()`; pass `{ force: true }` to `set()`/`update()` to bypass. Re-entrant updates (calling `set`/`update` from within a subscriber) are queued in `#queue` and drained in FIFO order by `#flush()`. `#flush()` has a `MAX_FLUSH_ITERATIONS` (100) guard against infinite re-entrant loops. Updater errors are caught per-item (remaining queue items still process); the first error is rethrown after the queue drains. Subscriber errors are caught individually and logged via `console.error`. Spreads subscribers into a snapshot array before iterating to safely handle mutations during notification.
-- **`ComputedStore.ts`** — Reactive derived store using composition. Takes a `SourceStore<T>` and a `Selector<T, U>`, creates an internal `Store<U>` that auto-updates when the source changes. Implements `SourceStore<U>` so it can be chained (a `ComputedStore` can be the source for another `ComputedStore`). Exposes `get()`, `subscribe()`, `connect()`, `disconnect()`, and `isConnected`. Provides `protected` accessors (`source`, `selector`) for subclassing.
-- **`useStore.ts`** — React hook wrapping `useSyncExternalStore`. Supports an optional `Selector<T, U>` for derived state. Selector is stored in a `useRef` to avoid resubscribing when inline selectors change reference. Uses `store.subscribe.bind(store)` directly — TypeScript allows `() => void` where `Subscriber<T>` is expected. Uses `useDebugValue` for DevTools.
-- **`types.ts`** — Shared type definitions: `Selector<T, U>`, `Subscriber<T>`, `UpdateOptions`, `SourceStore<T>` (interface with `get()` and `subscribe()`).
-- **`createStore.ts`** — Factory function with TypeScript overloads to create `Store` instances (with initial state, or without for `Store<T | undefined>`).
-- **`index.ts`** — Public barrel. Re-exports `ComputedStore`, `createStore`, `Store`, and `useStore` via `export *`. Explicitly re-exports only `Selector` and `Subscriber` from `types.ts` (`SourceStore` and `UpdateOptions` are internal-only).
+- **`Store.ts`** — Core mutable state container. Uses ES2022 private fields. Exposes `get()`, `set()`, `update()`, `subscribe()`. Re-entrant updates (calling `set`/`update` from within a subscriber) are queued and flushed in FIFO order with a safety limit (100 iterations). Uses `Object.is` for equality checks; pass `{ force: true }` to bypass.
+- **`ComputedStore.ts`** — Read-only derived store using composition. Wraps a `SourceStore<T>` + `Selector<T, U>`, creates an internal `Store<U>` that auto-updates when the source changes. Implements `SourceStore<U>` so computed stores can be chained as sources for other computed stores. Has `connect()`/`disconnect()` to control the source subscription. Provides `protected` accessors (`source`, `selector`) for subclassing.
+- **`useStore.ts`** — React hook wrapping `useSyncExternalStore`. Supports an optional selector for derived state. Selector stored in a `useRef` to avoid resubscribing when inline selectors change reference.
+- **`createStore.ts`** — Factory function with TypeScript overloads to create `Store` instances.
+- **`types.ts`** — Shared type definitions: `Selector<T, U>`, `Subscriber<T>`, `UpdateOptions`, `SourceStore<T>`.
+- **`index.ts`** — Public barrel. Re-exports everything except `SourceStore` and `UpdateOptions` (internal-only).
 
 ## Tooling
 
