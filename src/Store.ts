@@ -70,13 +70,15 @@ export class Store<T> implements SourceStore<T> {
     let firstError: unknown = NO_ERROR
 
     try {
-      let q = this.#queue.shift()
-      while (q) {
-        if (++iterations > MAX_FLUSH_ITERATIONS) {
+      while (iterations < this.#queue.length) {
+        if (iterations >= MAX_FLUSH_ITERATIONS) {
           throw new Error(
             `Store: exceeded ${MAX_FLUSH_ITERATIONS} re-entrant updates. This likely indicates an infinite loop in a subscriber.`
           )
         }
+
+        const q = this.#queue[iterations] as QueueItem<T>
+        iterations += 1
 
         try {
           const state = q.updater(this.#state)
@@ -86,13 +88,9 @@ export class Store<T> implements SourceStore<T> {
             firstError = error
           }
         }
-
-        q = this.#queue.shift()
       }
-    } catch (error) {
-      this.#queue.length = 0
-      throw error
     } finally {
+      this.#queue.length = 0
       this.#notifying = false
     }
 
@@ -108,6 +106,10 @@ export class Store<T> implements SourceStore<T> {
 
     const prevState = this.#state
     this.#state = nextState
+
+    if (this.#subscribers.size === 0) {
+      return
+    }
 
     for (const listener of [...this.#subscribers]) {
       try {

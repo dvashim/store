@@ -9,16 +9,25 @@ export class ComputedStore<T, U> implements SourceStore<U> {
 
   constructor(source: SourceStore<T>, selector: Selector<T, U>) {
     this.#source = source
-    this.#derived = new Store(selector(source.get()))
     this.#selector = selector
-    this.connect()
+    this.#derived = new Store(this.#compute())
+    this.#subscribe()
+  }
+
+  #compute() {
+    return this.#selector(this.#source.get())
+  }
+
+  #subscribe() {
+    this.#unsubscribe = this.#source.subscribe(() => {
+      this.#derived.set(this.#compute())
+    })
   }
 
   connect() {
     this.disconnect()
-    this.#unsubscribe = this.#source.subscribe((state) => {
-      this.#derived.set(this.#selector(state))
-    })
+    this.#derived.set(this.#compute())
+    this.#subscribe()
   }
 
   disconnect() {
