@@ -1,5 +1,15 @@
 # @dvashim/store
 
+## 1.4.5
+
+### Patch Changes
+
+- [#40](https://github.com/dvashim/store/pull/40) [`c4bb79f`](https://github.com/dvashim/store/commit/c4bb79f5b52939972fd9cd49c486b52eb4db3a79) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Simplify internal implementation of Store and ComputedStore
+
+  - **Refactor:** Simplify Store flush loop to use index-based iteration and skip subscriber notification when there are no subscribers
+  - **Refactor:** Extract `#compute` and `#subscribe` private methods in ComputedStore to reduce duplication
+  - **Docs:** Clarify that `connect()` immediately syncs the derived value with the current source state
+
 ## 1.4.4
 
 ### Patch Changes
