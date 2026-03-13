@@ -1,17 +1,16 @@
 import { useDebugValue, useMemo, useRef, useSyncExternalStore } from 'react'
-import type { Store } from './Store'
-import type { Selector } from './types'
+import type { Selector, SourceStore } from './types'
 
 /**
- * Subscribes a React component to a {@link Store} and returns its current state.
+ * Subscribes a React component to a {@link SourceStore} and returns its current state.
  *
  * @param store - The store to subscribe to.
  * @returns The current state of the store.
  */
-function useStore<T>(store: Store<T>): T
+function useStore<T>(store: SourceStore<T>): T
 
 /**
- * Subscribes a React component to a {@link Store} and returns a derived value
+ * Subscribes a React component to a {@link SourceStore} and returns a derived value
  * computed by the selector.
  *
  * The selector should return a referentially stable value (e.g. a primitive or
@@ -22,9 +21,12 @@ function useStore<T>(store: Store<T>): T
  * @param selector - A function that derives a value from the store state.
  * @returns The value returned by the selector.
  */
-function useStore<T, U>(store: Store<T>, selector: Selector<T, U>): U
+function useStore<T, U>(store: SourceStore<T>, selector: Selector<T, U>): U
 
-function useStore<T, U = T>(store: Store<T>, selector?: Selector<T, U>): T | U {
+function useStore<T, U = T>(
+  store: SourceStore<T>,
+  selector?: Selector<T, U>
+): T | U {
   const selectorRef = useRef<typeof selector>(undefined)
   selectorRef.current = selector
 
