@@ -1,5 +1,11 @@
 # @dvashim/store
 
+## 1.4.6
+
+### Patch Changes
+
+- [#42](https://github.com/dvashim/store/pull/42) [`6d67358`](https://github.com/dvashim/store/commit/6d67358585c9abba993916de05aea3fdabf838b5) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Fix `useStore` hook to accept `SourceStore<T>` instead of `Store<T>`, allowing `ComputedStore` instances to be passed directly
+
 ## 1.4.5
 
 ### Patch Changes
