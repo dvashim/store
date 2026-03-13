@@ -148,12 +148,17 @@ remaining$.isConnected // true
 
 ### `useStore(store, selector?)`
 
-React hook that subscribes a component to a store.
+React hook that subscribes a component to any `SourceStore` — works with both `Store` and `ComputedStore`.
 
 ```tsx
 function Counter() {
   const count = useStore(count$)
   return <p>{count}</p>
+}
+
+function Remaining() {
+  const remaining = useStore(remaining$)
+  return <p>{remaining} left</p>
 }
 ```
 

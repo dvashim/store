@@ -28,7 +28,7 @@ The library source lives in `src/` (~300 lines across 6 files). The central abst
 
 - **`Store.ts`** — Core mutable state container. Uses ES2022 private fields. Exposes `get()`, `set()`, `update()`, `subscribe()`. Re-entrant updates (calling `set`/`update` from within a subscriber) are queued and flushed in FIFO order with a safety limit (100 iterations). Uses `Object.is` for equality checks; pass `{ force: true }` to bypass.
 - **`ComputedStore.ts`** — Read-only derived store using composition. Wraps a `SourceStore<T>` + `Selector<T, U>`, creates an internal `Store<U>` that auto-updates when the source changes. Implements `SourceStore<U>` so computed stores can be chained as sources for other computed stores. Has `connect()`/`disconnect()` to control the source subscription. Provides `protected` accessors (`source`, `selector`) for subclassing.
-- **`useStore.ts`** — React hook wrapping `useSyncExternalStore`. Supports an optional selector for derived state. Selector stored in a `useRef` to avoid resubscribing when inline selectors change reference.
+- **`useStore.ts`** — React hook wrapping `useSyncExternalStore`. Accepts any `SourceStore<T>` (both `Store` and `ComputedStore`). Supports an optional selector for derived state. Selector stored in a `useRef` to avoid resubscribing when inline selectors change reference.
 - **`createStore.ts`** — Factory function with TypeScript overloads to create `Store` instances.
 - **`types.ts`** — Shared type definitions: `Selector<T, U>`, `Subscriber<T>`, `UpdateOptions`, `SourceStore<T>`.
 - **`index.ts`** — Public barrel. Re-exports everything except `SourceStore` and `UpdateOptions` (internal-only).
