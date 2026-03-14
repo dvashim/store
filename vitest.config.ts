@@ -8,6 +8,10 @@ export default defineConfig({
     },
   },
   test: {
+    coverage: {
+      include: ['src/**'],
+      provider: 'v8',
+    },
     environment: 'jsdom',
     include: ['tests/**/*.test.{ts,tsx}'],
     typecheck: {
