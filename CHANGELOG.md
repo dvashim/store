@@ -1,5 +1,11 @@
 # @dvashim/store
 
+## 1.5.1
+
+### Patch Changes
+
+- [#46](https://github.com/dvashim/store/pull/46) [`4fc701c`](https://github.com/dvashim/store/commit/4fc701c4c76aa8a3a4364dae74aadb8f201d983e) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Add V8 test coverage support
+
 ## 1.5.0
 
 ### Minor Changes
