@@ -1,13 +1,6 @@
 import type { SourceStore, Subscriber, UpdateOptions } from './types'
 
 type Updater<T> = (prevValue: T) => T
-type QueueItem<T> = {
-  updater: Updater<T>
-  options: UpdateOptions | undefined
-}
-
-const NO_ERROR = Symbol('no error')
-const MAX_FLUSH_ITERATIONS = 100
 
 /**
  * Reactive state container with subscription-based change notification.
@@ -15,8 +8,8 @@ const MAX_FLUSH_ITERATIONS = 100
  */
 export class Store<T> implements SourceStore<T> {
   readonly #subscribers = new Set<Subscriber<T>>()
-  readonly #queue: QueueItem<T>[] = []
   #notifying = false
+  #reentrantError: Error | null = null
   #state: T
 
   constructor(initialState: T) {
@@ -45,61 +38,28 @@ export class Store<T> implements SourceStore<T> {
    * @param options - Pass `{ force: true }` to notify even when unchanged.
    */
   set(state: T, options?: UpdateOptions) {
-    this.#queue.push({ updater: () => state, options })
-    return this.#flush()
+    this.#notify(state, options)
   }
 
   /**
    * Derives the next state via an updater function and notifies subscribers.
-   * Re-entrant calls from within a subscriber are queued and flushed in FIFO order.
+   * Re-entrant calls from within a subscriber throw an error.
    * @param updater - Receives the current state and returns the next state.
    * @param options - Pass `{ force: true }` to notify even when unchanged.
    */
   update(updater: Updater<T>, options?: UpdateOptions) {
-    this.#queue.push({ updater, options })
-    return this.#flush()
+    this.#notify(updater(this.#state), options)
   }
 
-  #flush(): void {
+  #notify(nextState: T, options?: UpdateOptions) {
     if (this.#notifying) {
-      return
+      this.#reentrantError = new Error(
+        'set() or update() cannot be called from within a subscriber'
+      )
+
+      throw this.#reentrantError
     }
 
-    this.#notifying = true
-    let iterations = 0
-    let firstError: unknown = NO_ERROR
-
-    try {
-      while (iterations < this.#queue.length) {
-        if (iterations >= MAX_FLUSH_ITERATIONS) {
-          throw new Error(
-            `Store: exceeded ${MAX_FLUSH_ITERATIONS} re-entrant updates. This likely indicates an infinite loop in a subscriber.`
-          )
-        }
-
-        const q = this.#queue[iterations] as QueueItem<T>
-        iterations += 1
-
-        try {
-          const state = q.updater(this.#state)
-          this.#commit(state, q.options)
-        } catch (error) {
-          if (firstError === NO_ERROR) {
-            firstError = error
-          }
-        }
-      }
-    } finally {
-      this.#queue.length = 0
-      this.#notifying = false
-    }
-
-    if (firstError !== NO_ERROR) {
-      throw firstError
-    }
-  }
-
-  #commit(nextState: T, options?: UpdateOptions) {
     if (!options?.force && Object.is(nextState, this.#state)) {
       return
     }
@@ -111,12 +71,22 @@ export class Store<T> implements SourceStore<T> {
       return
     }
 
-    for (const listener of [...this.#subscribers]) {
-      try {
-        listener(nextState, prevState)
-      } catch (error) {
-        console.error('Error in subscriber', error)
+    this.#notifying = true
+
+    try {
+      for (const listener of [...this.#subscribers]) {
+        try {
+          listener(nextState, prevState)
+        } catch (error) {
+          if (error === this.#reentrantError) {
+            throw error
+          }
+          console.error('Error in subscriber', error)
+        }
       }
+    } finally {
+      this.#notifying = false
+      this.#reentrantError = null
     }
   }
 }
