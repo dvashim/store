@@ -1,5 +1,14 @@
 # @dvashim/store
 
+## 1.5.0
+
+### Minor Changes
+
+- [#44](https://github.com/dvashim/store/pull/44) [`b4619ce`](https://github.com/dvashim/store/commit/b4619ce0ffa2a6087529a6660171057f02cf9d34) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Replace re-entrant update queue with immediate throw
+
+  - **Breaking:** Calling `set()` or `update()` from within a subscriber now throws instead of being queued and flushed
+  - **Removed:** Queue-based flush system and 100-iteration safety limit
+
 ## 1.4.6
 
 ### Patch Changes
