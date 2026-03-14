@@ -20,18 +20,24 @@ pnpm watch          # Build in watch mode
 pnpm clean          # Remove dist/ and tsbuildinfo
 ```
 
-Tests use **Vitest** with **jsdom** environment and **@testing-library/react**. Test files go in `tests/` as `*.test.ts` / `*.test.tsx`. Type tests use `*.test-d.ts` with `expectTypeOf`. Use `@/*` alias to import from `src/` (e.g. `import { Store } from '@/Store'`). Run a single test file with `pnpm test tests/foo.test.ts`.
+Tests use **Vitest** with **jsdom** environment and **@testing-library/react**. Test files go in `tests/` as `*.test.ts` / `*.test.tsx`. Type tests use `*.test-d.ts` with `expectTypeOf`. Use `@/*` alias to import from `src/` (e.g. `import { Store } from '@/Store'`). Run a single test file with `pnpm test tests/foo.test.ts`. Biome has custom overrides for test files (disabled complexity checks) and type tests (`useExpect` off).
 
 ## Architecture
 
-The library source lives in `src/` (~300 lines across 6 files). The central abstraction is the `SourceStore<T>` interface (defined in `types.ts`): anything with `get()` and `subscribe()` methods. Both `Store` and `ComputedStore` implement it, which enables chaining.
+The library source lives in `src/` (~220 lines across 6 files). The central abstraction is the `SourceStore<T>` interface (defined in `types.ts`): anything with `get()` and `subscribe()` methods. Both `Store` and `ComputedStore` implement it, which enables chaining.
 
-- **`Store.ts`** — Core mutable state container. Uses ES2022 private fields. Exposes `get()`, `set()`, `update()`, `subscribe()`. Re-entrant updates (calling `set`/`update` from within a subscriber) are queued and flushed in FIFO order with a safety limit (100 iterations). Uses `Object.is` for equality checks; pass `{ force: true }` to bypass.
+- **`Store.ts`** — Core mutable state container. Uses ES2022 private fields. Exposes `get()`, `set()`, `update()`, `subscribe()`. Re-entrant updates (calling `set`/`update` from within a subscriber) throw immediately. Uses `Object.is` for equality checks; pass `{ force: true }` to bypass.
 - **`ComputedStore.ts`** — Read-only derived store using composition. Wraps a `SourceStore<T>` + `Selector<T, U>`, creates an internal `Store<U>` that auto-updates when the source changes. Implements `SourceStore<U>` so computed stores can be chained as sources for other computed stores. Has `connect()`/`disconnect()` to control the source subscription. Provides `protected` accessors (`source`, `selector`) for subclassing.
 - **`useStore.ts`** — React hook wrapping `useSyncExternalStore`. Accepts any `SourceStore<T>` (both `Store` and `ComputedStore`). Supports an optional selector for derived state. Selector stored in a `useRef` to avoid resubscribing when inline selectors change reference.
 - **`createStore.ts`** — Factory function with TypeScript overloads to create `Store` instances.
 - **`types.ts`** — Shared type definitions: `Selector<T, U>`, `Subscriber<T>`, `UpdateOptions`, `SourceStore<T>`.
-- **`index.ts`** — Public barrel. Re-exports everything except `SourceStore` and `UpdateOptions` (internal-only).
+- **`index.ts`** — Public barrel. Re-exports everything except `SourceStore` and `UpdateOptions` (internal-only). Do not export these types.
+
+## Key Design Decisions
+
+- **Subscriber snapshot iteration** — `Store` copies the subscriber set (`[...this.#subscribers]`) before iterating, allowing safe subscribe/unsubscribe during notification.
+- **Re-entrant error identity** — `#reentrantError` is stored as an instance field so the subscriber loop's catch can distinguish re-entrant errors (rethrown) from regular subscriber errors (logged).
+- **Selector ref in `useStore`** — The selector is stored in a `useRef` to keep a stable `subscribe` callback for `useSyncExternalStore`, avoiding resubscription when inline selectors change reference.
 
 ## Tooling
 
