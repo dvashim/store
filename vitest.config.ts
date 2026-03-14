@@ -8,12 +8,12 @@ export default defineConfig({
     },
   },
   test: {
+    environment: 'jsdom',
+    include: ['tests/**/*.test.{ts,tsx}'],
     coverage: {
       include: ['src/**'],
       provider: 'v8',
     },
-    environment: 'jsdom',
-    include: ['tests/**/*.test.{ts,tsx}'],
     typecheck: {
       enabled: true,
       include: ['tests/**/*.test-d.{ts,tsx}'],

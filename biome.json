@@ -13,6 +13,9 @@
       }
     }
   },
+  "files": {
+    "includes": ["!!**/dist", "!!**/coverage"]
+  },
   "linter": {
     "rules": {
       "nursery": {
