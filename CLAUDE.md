@@ -19,6 +19,7 @@ pnpm test:coverage  # Run tests with V8 coverage
 pnpm test:watch     # Run tests in watch mode (vitest)
 pnpm watch          # Build in watch mode
 pnpm clean          # Remove dist/ and tsbuildinfo
+pnpm changeset      # Create a new changeset for versioning
 ```
 
 Tests use **Vitest** with **jsdom** environment and **@testing-library/react**. Test files go in `tests/` as `*.test.ts` / `*.test.tsx`. Type tests use `*.test-d.ts` with `expectTypeOf`. Use `@/*` alias to import from `src/` (e.g. `import { Store } from '@/Store'`). Run a single test file with `pnpm test tests/foo.test.ts`. Biome has custom overrides for test files (disabled complexity checks) and type tests (`useExpect` off).
@@ -47,6 +48,8 @@ The library source lives in `src/` (~220 lines across 6 files). The central abst
 - **`isolatedDeclarations`** is enabled via the parent config (`@dvashim/typescript-config/lib-dev`). All exported methods, accessors, and functions in `src/` must have explicit return type annotations.
 - **pnpm** as package manager
 - **Changesets** for versioning and npm publishing
+- **React** peer dependency supports ^18.0.0 || ^19.0.0
+- **TypeScript 6** — uses ES2022 target with `isolatedDeclarations`
 
 ## Release
 
