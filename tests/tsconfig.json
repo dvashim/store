@@ -4,6 +4,7 @@
   "compilerOptions": {
     "noEmit": true,
     "rootDir": "..",
+    "types": ["vitest"],
     "paths": {
       "@/*": ["../src/*"]
     }
