@@ -24,34 +24,34 @@ export class ComputedStore<T, U> implements SourceStore<U> {
     })
   }
 
-  connect() {
+  connect(): void {
     this.disconnect()
     this.#derived.set(this.#compute())
     this.#subscribe()
   }
 
-  disconnect() {
+  disconnect(): void {
     this.#unsubscribe?.()
     this.#unsubscribe = undefined
   }
 
-  get isConnected() {
+  get isConnected(): boolean {
     return !!this.#unsubscribe
   }
 
-  protected get source() {
+  protected get source(): SourceStore<T> {
     return this.#source
   }
 
-  protected get selector() {
+  protected get selector(): Selector<T, U> {
     return this.#selector
   }
 
-  get() {
+  get(): U {
     return this.#derived.get()
   }
 
-  subscribe(fn: Subscriber<U>) {
+  subscribe(fn: Subscriber<U>): () => void {
     return this.#derived.subscribe(fn)
   }
 }
