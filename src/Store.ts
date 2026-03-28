@@ -37,7 +37,7 @@ export class Store<T> implements SourceStore<T> {
    * @param state - The new state value.
    * @param options - Pass `{ force: true }` to notify even when unchanged.
    */
-  set(state: T, options?: UpdateOptions) {
+  set(state: T, options?: UpdateOptions): void {
     this.#notify(state, options)
   }
 
@@ -47,7 +47,7 @@ export class Store<T> implements SourceStore<T> {
    * @param updater - Receives the current state and returns the next state.
    * @param options - Pass `{ force: true }` to notify even when unchanged.
    */
-  update(updater: Updater<T>, options?: UpdateOptions) {
+  update(updater: Updater<T>, options?: UpdateOptions): void {
     this.#notify(updater(this.#state), options)
   }
 
