@@ -15,6 +15,7 @@ pnpm check:biome    # Lint and format check via Biome
 pnpm check:ts       # TypeScript type checking (src + tests, no emit)
 pnpm ci             # Run all checks + tests (used in CI workflows)
 pnpm test           # Run tests once (vitest run)
+pnpm test:coverage  # Run tests with V8 coverage
 pnpm test:watch     # Run tests in watch mode (vitest)
 pnpm watch          # Build in watch mode
 pnpm clean          # Remove dist/ and tsbuildinfo
@@ -43,6 +44,7 @@ The library source lives in `src/` (~220 lines across 6 files). The central abst
 
 - **Biome** for linting and formatting (extends `@dvashim/biome-config/react-balanced`)
 - **TypeScript** uses project references: `tsconfig.dev.json` (library source), `tsconfig.node.json` (vitest config). Tests have their own `tests/tsconfig.json` (extends `tsconfig.dev.json`, noEmit).
+- **`isolatedDeclarations`** is enabled via the parent config (`@dvashim/typescript-config/lib-dev`). All exported methods, accessors, and functions in `src/` must have explicit return type annotations.
 - **pnpm** as package manager
 - **Changesets** for versioning and npm publishing
 
