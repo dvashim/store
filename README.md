@@ -18,7 +18,7 @@ or pnpm:
 pnpm add @dvashim/store
 ```
 
-**Peer dependencies:** `react >= 18`
+**Peer dependencies:** `react` and `react-dom` ^18.0.0 || ^19.0.0
 
 ## Quick Start
 
