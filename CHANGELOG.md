@@ -1,5 +1,17 @@
 # @dvashim/store
 
+## 1.5.3
+
+### Patch Changes
+
+- [#50](https://github.com/dvashim/store/pull/50) [`606921f`](https://github.com/dvashim/store/commit/606921fca760844071251fc9666d642f71034995) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Update project tooling for Node.js 24
+
+  - **CI:** Bump target Node.js version from 22 to 24
+  - **CI:** Upgrade `pnpm/action-setup` from v4 to v5 for Node 24 runtime compatibility
+  - **CI:** Replace `pnpm run ci` script with explicit `pnpm check` and `pnpm test` steps in workflows
+  - **Package:** Remove `ci` script from package.json
+  - **Package:** Sort package.json fields according to conventional order
+
 ## 1.5.2
 
 ### Patch Changes
