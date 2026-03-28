@@ -1,14 +1,48 @@
 {
-  "description": "Yet another state management in React",
-  "license": "MIT",
   "name": "@dvashim/store",
-  "packageManager": "pnpm@10.30.3",
-  "type": "module",
-  "types": "./dist/index.d.ts",
   "version": "1.5.2",
+  "description": "Yet another state management in React",
+  "keywords": [
+    "lightweight",
+    "minimal",
+    "react",
+    "state-manager",
+    "store",
+    "typescript",
+    "useSyncExternalStore"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dvashim/store.git"
+  },
+  "license": "MIT",
   "author": {
-    "email": "aleksei@dvashim.dev",
-    "name": "Aleksei Reznichenko"
+    "name": "Aleksei Reznichenko",
+    "email": "aleksei@dvashim.dev"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.dev.json",
+    "changeset": "changeset",
+    "check": "pnpm run \"/^check:.*/\"",
+    "check:biome": "biome check",
+    "check:ts": "tsc --noemit",
+    "clean": "rm -rf dist *.tsbuildinfo",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
+    "watch": "pnpm build --watch"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.4.9",
@@ -28,48 +62,13 @@
     "typescript": "^6.0.2",
     "vitest": "^4.1.2"
   },
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "react",
-    "state-manager",
-    "useSyncExternalStore",
-    "store",
-    "minimal",
-    "lightweight",
-    "typescript"
-  ],
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
+  "packageManager": "pnpm@10.30.3",
   "publishConfig": {
     "access": "public",
     "provenance": true
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/dvashim/store.git"
-  },
-  "scripts": {
-    "build": "tsc --project tsconfig.dev.json",
-    "changeset": "changeset",
-    "check": "pnpm run \"/^check:.*/\"",
-    "check:biome": "biome check",
-    "check:ts": "tsc --noemit",
-    "ci": "pnpm check && pnpm test",
-    "clean": "rm -rf dist *.tsbuildinfo",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "test:watch": "vitest",
-    "watch": "pnpm build --watch"
   }
 }
