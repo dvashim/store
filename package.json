@@ -41,7 +41,7 @@
     "changeset": "changeset",
     "check": "pnpm run \"/^check:.*/\"",
     "check:biome": "biome check",
-    "check:ts": "tsc --noemit",
+    "check:ts": "tsc --project tsconfig.dev.json --emitDeclarationOnly",
     "clean": "rm -rf dist *.tsbuildinfo",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
