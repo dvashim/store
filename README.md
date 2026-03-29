@@ -4,18 +4,15 @@
 [![npm version][npm-badge]][npm-url]
 [![npm downloads][downloads-badge]][npm-url]
 [![License: MIT][license-badge]][license-url]
-[![TypeScript][ts-badge]][ts-url]
 [![Checked with Biome][biome-badge]][biome-url]
 
-[ci-badge]: https://img.shields.io/github/actions/workflow/status/dvashim/store/ci.yml?branch=main&style=flat-square&logo=github&label=CI
+[ci-badge]: https://img.shields.io/github/actions/workflow/status/dvashim/store/ci.yml?style=flat-square&logo=github&label=CI
 [ci-url]: https://github.com/dvashim/store/actions/workflows/ci.yml
 [npm-badge]: https://img.shields.io/npm/v/@dvashim/store.svg?logo=npm&style=flat-square&color=07c&label=@dvashim/store
 [npm-url]: https://www.npmjs.com/package/@dvashim/store
 [downloads-badge]: https://img.shields.io/npm/dm/@dvashim/store?logo=npm&style=flat-square&color=07c
 [license-badge]: https://img.shields.io/npm/l/@dvashim/store?style=flat-square&color=07c
 [license-url]: https://github.com/dvashim/store/blob/main/LICENSE
-[ts-badge]: https://img.shields.io/badge/TypeScript-07c?style=flat-square&logo=typescript&logoColor=fff
-[ts-url]: https://www.typescriptlang.org/
 [biome-badge]: https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat-square&logo=biome&color=07c&logoColor=fff
 [biome-url]: https://biomejs.dev
 
