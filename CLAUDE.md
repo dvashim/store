@@ -12,8 +12,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pnpm build          # Build with tsc (outputs to dist/)
 pnpm check          # Run all checks (biome + typecheck)
 pnpm check:biome    # Lint and format check via Biome
-pnpm check:ts       # TypeScript type checking (src + tests, no emit)
-pnpm ci             # Run all checks + tests (used in CI workflows)
+pnpm check:ts       # TypeScript type checking with declaration emit (catches isolatedDeclarations errors)
 pnpm test           # Run tests once (vitest run)
 pnpm test:coverage  # Run tests with V8 coverage
 pnpm test:watch     # Run tests in watch mode (vitest)
