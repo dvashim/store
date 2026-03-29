@@ -1,5 +1,17 @@
 # @dvashim/store
 
+## 1.5.4
+
+### Patch Changes
+
+- [#54](https://github.com/dvashim/store/pull/54) [`ba3818d`](https://github.com/dvashim/store/commit/ba3818d53f2c47516e925c7e8acfb8016fe6b656) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Improve supply chain security and package metadata
+
+  - **CI:** Pin GitHub Actions to SHA hashes, add scoped permissions, switch to OIDC-based npm provenance
+  - **CI:** Fix release workflow `cancel-in-progress` to prevent mid-publish cancellation
+  - **Security:** Add security policy with GitHub Security Advisories
+  - **Security:** Add Dependabot config for npm and GitHub Actions
+  - **Package:** Add `homepage`, `bugs`, and `engines` fields
+
 ## 1.5.3
 
 ### Patch Changes
