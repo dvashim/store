@@ -1,6 +1,6 @@
 {
   "name": "@dvashim/store",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "description": "Yet another state management in React",
   "keywords": [
     "lightweight",
