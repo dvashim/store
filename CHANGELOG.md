@@ -1,5 +1,14 @@
 # @dvashim/store
 
+## 1.5.5
+
+### Patch Changes
+
+- [#56](https://github.com/dvashim/store/pull/56) [`f85a46f`](https://github.com/dvashim/store/commit/f85a46fb79d15b0594ff136c1d8da1b16b3a9628) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Improve CI and documentation
+
+  - **CI:** Replace build step with declaration-only typecheck to catch `isolatedDeclarations` errors
+  - **Docs:** Add CI, license, TypeScript, and Biome badges with reference-style links
+
 ## 1.5.4
 
 ### Patch Changes
