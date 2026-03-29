@@ -11,9 +11,13 @@
     "typescript",
     "useSyncExternalStore"
   ],
+  "homepage": "https://github.com/dvashim/store#readme",
+  "bugs": {
+    "url": "https://github.com/dvashim/store/issues"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/dvashim/store.git"
+    "url": "git+https://github.com/dvashim/store.git"
   },
   "license": "MIT",
   "author": {
@@ -48,8 +52,8 @@
     "@biomejs/biome": "^2.4.9",
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
-    "@dvashim/biome-config": "^1.5.1",
-    "@dvashim/typescript-config": "^2.0.1",
+    "@dvashim/biome-config": "^1.5.7",
+    "@dvashim/typescript-config": "^2.0.4",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
@@ -67,8 +71,10 @@
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "packageManager": "pnpm@10.30.3",
+  "engines": {
+    "node": ">=18"
+  },
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   }
 }

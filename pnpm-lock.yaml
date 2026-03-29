@@ -18,11 +18,11 @@ importers:
         specifier: ^2.30.0
         version: 2.30.0(@types/node@25.5.0)
       '@dvashim/biome-config':
-        specifier: ^1.5.1
-        version: 1.5.1
+        specifier: ^1.5.7
+        version: 1.5.7
       '@dvashim/typescript-config':
-        specifier: ^2.0.1
-        version: 2.0.1(typescript@6.0.2)
+        specifier: ^2.0.4
+        version: 2.0.4(typescript@6.0.2)
       '@testing-library/react':
         specifier: ^16.3.2
         version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -59,8 +59,8 @@ importers:
 
 packages:
 
-  '@asamuzakjp/css-color@5.0.1':
-    resolution: {integrity: sha512-2SZFvqMyvboVV1d15lMf7XiI3m7SDqXUuKaTymJYLN6dSGadqp+fVojqJlVoMlbZnlTmu3S0TLwLTJpvBMO1Aw==}
+  '@asamuzakjp/css-color@5.1.1':
+    resolution: {integrity: sha512-iGWN8E45Ws0XWx3D44Q1t6vX2LqhCKcwfmwBYCDsFrYFS6m4q/Ks61L2veETaLv+ckDC6+dTETJoaAAb7VjLiw==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
 
   '@asamuzakjp/dom-selector@7.0.4':
@@ -257,11 +257,12 @@ packages:
     resolution: {integrity: sha512-QxULHAm7cNu72w97JUNCBFODFaXpbDg+dP8b/oWFAZ2MTRppA3U00Y2L1HqaS4J6yBqxwa/Y3nMBaxVKbB/NsA==}
     engines: {node: '>=20.19.0'}
 
-  '@dvashim/biome-config@1.5.1':
-    resolution: {integrity: sha512-/WKGfbTNVk9IfCq9w+ami5lfXe9gZ/fszYzOc3M0k4WGJbrHQ4Y9zDyw4RHz8zTuQWRDwZJIM652jZf1ee6HEQ==}
+  '@dvashim/biome-config@1.5.7':
+    resolution: {integrity: sha512-rw78YouXWvSjXm0oj/mHFsS4r5ezg94IraVRXbPWe/pLcBrAI3u5FxcmpBWnsM/FOdTUNKx64kiPgDB3ARloUg==}
+    engines: {node: '>=18'}
 
-  '@dvashim/typescript-config@2.0.1':
-    resolution: {integrity: sha512-KaRfVN0nJiFtMb/Ho/6UZmL2FNK5y0+XXQAluXu7IgENkL0nNveo5IRJPW/mbL3eEo3B4CFROnW1k7xsmwaQow==}
+  '@dvashim/typescript-config@2.0.4':
+    resolution: {integrity: sha512-7/Yqx6o110I7hRh7tMxWZUW1nowYGF6xu7fvp6saAC5h1wJioAF8MIaPWuKChhapiN2JniXTNEQe/T5dHisnvg==}
     peerDependencies:
       typescript: '>=6.0.0'
 
@@ -1395,7 +1396,7 @@ packages:
 
 snapshots:
 
-  '@asamuzakjp/css-color@5.0.1':
+  '@asamuzakjp/css-color@5.1.1':
     dependencies:
       '@csstools/css-calc': 3.1.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-color-parser': 4.0.2(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
@@ -1657,9 +1658,9 @@ snapshots:
 
   '@csstools/css-tokenizer@4.0.0': {}
 
-  '@dvashim/biome-config@1.5.1': {}
+  '@dvashim/biome-config@1.5.7': {}
 
-  '@dvashim/typescript-config@2.0.1(typescript@6.0.2)':
+  '@dvashim/typescript-config@2.0.4(typescript@6.0.2)':
     dependencies:
       typescript: 6.0.2
 
@@ -2224,7 +2225,7 @@ snapshots:
 
   jsdom@29.0.1:
     dependencies:
-      '@asamuzakjp/css-color': 5.0.1
+      '@asamuzakjp/css-color': 5.1.1
       '@asamuzakjp/dom-selector': 7.0.4
       '@bramus/specificity': 2.4.2
       '@csstools/css-syntax-patches-for-csstree': 1.1.2(css-tree@3.2.1)
