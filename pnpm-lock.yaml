@@ -19,7 +19,7 @@ importers:
         version: 2.30.0(@types/node@25.5.0)
       '@dvashim/biome-config':
         specifier: ^1.5.7
-        version: 1.5.7
+        version: 1.5.8
       '@dvashim/typescript-config':
         specifier: ^2.0.4
         version: 2.0.4(typescript@6.0.2)
@@ -257,8 +257,8 @@ packages:
     resolution: {integrity: sha512-QxULHAm7cNu72w97JUNCBFODFaXpbDg+dP8b/oWFAZ2MTRppA3U00Y2L1HqaS4J6yBqxwa/Y3nMBaxVKbB/NsA==}
     engines: {node: '>=20.19.0'}
 
-  '@dvashim/biome-config@1.5.7':
-    resolution: {integrity: sha512-rw78YouXWvSjXm0oj/mHFsS4r5ezg94IraVRXbPWe/pLcBrAI3u5FxcmpBWnsM/FOdTUNKx64kiPgDB3ARloUg==}
+  '@dvashim/biome-config@1.5.8':
+    resolution: {integrity: sha512-DKv0seUDvkrZWObTkkut59uZ+sIGmW6fsgd39wgmapeTeznZhR8P1OTGMx2hY5CrJ03sG7MYHdl9KUo2SmQPDQ==}
     engines: {node: '>=18'}
 
   '@dvashim/typescript-config@2.0.4':
@@ -1658,7 +1658,7 @@ snapshots:
 
   '@csstools/css-tokenizer@4.0.0': {}
 
-  '@dvashim/biome-config@1.5.7': {}
+  '@dvashim/biome-config@1.5.8': {}
 
   '@dvashim/typescript-config@2.0.4(typescript@6.0.2)':
     dependencies:
