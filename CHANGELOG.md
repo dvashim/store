@@ -1,5 +1,11 @@
 # @dvashim/store
 
+## 1.5.6
+
+### Patch Changes
+
+- [#58](https://github.com/dvashim/store/pull/58) [`9946e0a`](https://github.com/dvashim/store/commit/9946e0aa5542fac27a3c82e13dd0c38047866c6d) Thanks [@aleksei-reznichenko](https://github.com/aleksei-reznichenko)! - Remove TypeScript badge and fix CI badge showing no status
+
 ## 1.5.5
 
 ### Patch Changes
