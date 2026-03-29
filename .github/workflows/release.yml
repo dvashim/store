@@ -2,47 +2,43 @@ name: Release
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    permissions:
-      contents: write
-      pull-requests: write
-      id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
-      - uses: pnpm/action-setup@v5
-      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6
         with:
-          node-version-file: .node-version
-          cache: pnpm
-
+          node-version-file: '.node-version'
+          cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm test
       - run: pnpm build
 
-      - name: Create Version Pull Request
-        id: changesets
-        uses: changesets/action@v1
+      - id: changesets
+        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1
         with:
           version: pnpm changeset version
-          publish: pnpm changeset publish --provenance
-          commit: "chore: version packages"
-          title: "chore: version packages"
+          publish: pnpm changeset publish
           setupGitUser: true
-          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+          NPM_CONFIG_PROVENANCE: true
